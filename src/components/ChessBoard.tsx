@@ -29,35 +29,46 @@ const ChessBoard = ({
             {row.map((square, j) => {
               const squareRepresentation = String.fromCharCode(97 + (j % 8)) + "" + (8 - i) as Square;
               return (
-                  <div
-                      onClick={() => {
-                          if (!from) {
-                            setFrom(squareRepresentation)
-                            console.log(from)
-                          } else {
-                            setTo(square?.square ?? null)
-                              socket.send(JSON.stringify({
-                                  type: "move",
-                                  move: {
-                                      from,
-                                      to: squareRepresentation
-                                },
-                              }))
-                            setFrom(null)
-                            chess.move({
-                              from,
-                              to: squareRepresentation
-                            })
-                            setBoard(chess.board())
-                          }
-                      }}
+                <div
+                  onClick={() => {
+                    if (!from) {
+                      setFrom(squareRepresentation);
+                      console.log(from);
+                    } else {
+                      setTo(square?.square ?? null);
+                      socket.send(
+                        JSON.stringify({
+                          type: "move",
+                          move: {
+                            from,
+                            to: squareRepresentation,
+                          },
+                        })
+                      );
+                      setFrom(null);
+                      chess.move({
+                        from,
+                        to: squareRepresentation,
+                      });
+                      setBoard(chess.board());
+                    }
+                  }}
                   key={j}
                   className={`w-18 h-18 ${
-                    (i + j) % 2 === 0 ? "bg-green-500" : "bg-slate-500"
+                    (i + j) % 2 === 0 ? "bg-[#739552]" : "bg-[#EBECD0]"
                   }`}
                 >
                   <div className="flex justify-center h-full items-center">
-                    {square ? <img className="w-8" src={`/img/${square?.color === "b" ? square?.type : `${square?.type?.toUpperCase()} copy`}.png`} /> : null}
+                    {square ? (
+                      <img
+                        className="w-20"
+                        src={`/img/${
+                          square?.color === "b"
+                            ? square?.type
+                            : `${square?.type?.toUpperCase()} copy`
+                        }.png`}
+                      />
+                    ) : null}
                   </div>
                 </div>
               );
